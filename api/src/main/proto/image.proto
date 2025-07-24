@@ -1,0 +1,70 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+option java_multiple_files = true;
+option java_package = "servicestubs";
+package image; // package do proto
+
+service Image {
+  // process a stream block of images
+  rpc processImage(stream Chunk) returns (Identifier);
+
+  // corresponding images for a given identifier
+  rpc correspondingImage(Identifier) returns (ExistingMonuments);
+
+  //get map image for a given identifier
+  rpc getMapImage(Identifier) returns (MapImage);
+
+  //get all images with confidence above a certain threshold
+  rpc getMonumentAboveConfidence(Confidence) returns (PhotosList);
+
+}
+
+message Chunk {
+  string imageName = 1; // name of the image
+  bytes content = 2;
+}
+
+message Identifier {
+  string fileID = 1;
+}
+
+message Confidence {
+  float confidence = 1;
+}
+message Location {
+  double latitude = 1;
+  double longitude = 2;
+}
+
+message Monument {
+  string name = 1;
+  Location location = 2;
+  Confidence confidence = 3;
+}
+
+message ExistingMonuments {
+  repeated Monument monuments = 1;
+}
+
+message MapImage {
+  bytes staticMapImage = 1;  // For the Google Maps static image
+}
+
+message ImageList {
+  repeated ImageDetection detections = 1;
+}
+
+message ImageDetection {
+  string imageName = 1;
+  float confidence = 2;
+}
+
+message PhotoName {
+  string name = 1;
+  Location location = 2;
+  Confidence confidence = 3;
+}
+
+message PhotosList {
+  repeated PhotoName photos = 1;
+}

@@ -1,0 +1,1 @@
+gcloud functions deploy funcIpLookup --project=cn2425-t1-g09 --region=europe-southwest1 --allow-unauthenticated --entry-point=pt.isel.cn.Entrypoint --gen2 --runtime=java21 --trigger-http --source=target/deployment --service-account=cloud-function@cn2425-t1-g09.iam.gserviceaccount.com --max-instances=3
